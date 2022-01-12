@@ -161,43 +161,48 @@ def main():
 
     # print initial message for user
     print('\n\n' + '***' * 50)
-    print('INPUT DOCUMENT BUILDER\n\nThis program will help you generate the input documentation needed to run '
-          'PheKnowLator by asking specific information about each edge type in the knowledge graph.\nIt will help '
-          'you create three documents: (1) resource_info.txt; (2) ontology_source_info.txt; and (3) '
-          'edge_source_info.txt.\nAn example of the data this program expects to find within each of these '
-          'documents is shown below:\n\n(1) resource_info.txt: This document represents each edge type as a single '
-          '"|" delimited string and contains a total of 11 items:\n\t(1) Edge Type: A string containing a "-" '
-          'delimited edge label (node1-node2)\n\t(2) Source Labels: 3 ";"-delimited strings (e.g. ":;GO_;GO_)":\n\t\t'
-          '-the character to split existing labels (e.g. ":" in GO:1283834)\n\t\t-a new label for the subject '
-          'node\n\t\t-a new label for the object node. If the existing label is correct, use ";;";\n\t(3) Data '
-          'Type: A label of "class", "entity" ( fornon-ontology data) provided for each node and separated by "-" ('
-          'e.g. "class-class", "class-entity", "entity-class");\n\t(4) Edge Relation: A Relation Ontology identifier to'
-          'be used as an edge between the nodes (e.g. "RO_0000056")\n\t(5) Subject URI: A Universal Resource Identifier'
-          ' that will be connected to the subject node in the Edge Type (e.g. "http://purl.uniprot.org/geneid/");\n\t'
-          '(6) Object URI that will be connected to the object node in the Edge Type (e.g. '
-          '"http://purl.obolibrary.org/obo/");\n\t(7) Delimiter: A character used to split input text rows into '
-          'columns (e.g. "t" or ",");\n\t(8) Column Indices: two column indices separated by ";" (e.g. 0;4 for the '
-          'first and third columns);\n\t(9) Identifier Maps: A string indicating the column index in the input data'
-          ' source needing identifier mapping and a file pointing to mapping data, for example:\n'
-          '\t\t"2:./resources/processed_data/mapping_file_1.txt;4:./resources/processed_data/mapping_file_2.txt" '
-          'means:\n\t\t\t-mapping data from the first node in the edge to the 0th column in '
-          '"mapping_file_1.txt"\n\t\t\t-mapping data from the second node in the edge to the 4th column in '
-          '"mapping_file_2.txt");\n\t(10) Evidence Criteria: Sets of 3 "::"-separated items, where each set is '
-          'composed of three pieces of ";"-separated information (e.g. "4;!=;IEA::8;<;0.0001" - means:\n\t\t-filter '
-          'the 4th column to keep rows that do not contain "IEA"\n\t\t-filter the 8th column to keep rows with a '
-          'value less than "0.0001");\n\t(11) Filter Criteria: Sets of 3 "::"-separated items, where each set is '
-          'composed of three pieces of ";"-separated information (e.g. "5;==;P::7;==;9606" - means:\n\t\t-filter the '
-          '5th column to only include rows with "P"\n\t\tfilter the 7th column to only include rows containing '
-          '"99606").\n\n\tAn example line from the resource_info.txt file is shown '
-          'below:\n\t\tchemical-gene|;MESH_;|class-class|;MESH_;|class-class|RO_0002434|http://purl.obolibrary.org'
-          '/obo/\n\t\t|http://purl.uniprot.org/geneid/|#|t|1;4|0:./resources/data_maps/MESH_CHEBI_MAP.txt|None|7'
-          ';==;9606\n\n(2) ontology_source_info.txt: This document contains a ","-delimited line for each ontology '
-          'source used, for example:\n\t"chemical, http://purl.obolibrary.org/obo/chebi.owl"\n\t"gene, '
-          'http://purl.obolibrary.org/obo/so.owl"\n\n(3) edge_source_info.txt: This document contains a ",'
-          '"-delimited line for each edge data source, for example:\n\t"chemical-gene, '
-          'http://ctdbase.org/reports/CTD_chem_gene_ixns.tsv.gz"\n\nIf you would like more information on the '
-          'dependency documents need to run PheKnowLator, please visit the following Wiki page: '
-          'https://github.com/callahantiff/PheKnowLator/wiki/Dependencies.')
+    print("\n".join((
+        "INPUT DOCUMENT BUILDER",
+        "",
+        "This program will help you generate the input documentation needed to run PheKnowLator by asking specific information about each edge type in the knowledge graph.",
+        "It will help you create three documents: (1) resource_info.txt; (2) ontology_source_info.txt; and (3) edge_source_info.txt.",
+        "An example of the data this program expects to find within each of these documents is shown below:",
+        "",
+        "(1) resource_info.txt: This document represents each edge type as a single \"|\" delimited string and contains a total of 11 items:",
+            "\t(1) Edge Type: A string containing a \"-\" delimited edge label (node1-node2)",
+            "\t(2) Source Labels: 3 \";\"-delimited strings (e.g. \":;GO_;GO_)\":",
+                "\t\t- the character to split existing labels (e.g. \":\" in GO:1283834)",
+                "\t\t- a new label for the subject node",
+                "\t\t- a new label for the object node. If the existing label is correct, use \";;\";",
+            "\t(3) Data Type: A label of \"class\", \"entity\" ( for non-ontology data) provided for each node and separated by \"-\" (e.g. \"class-class\", \"class-entity\", \"entity-class\");",
+            "\t(4) Edge Relation: A Relation Ontology identifier to be used as an edge between the nodes (e.g. \"RO_0000056\")",
+            "\t(5) Subject URI: A Universal Resource Identifier that will be connected to the subject node in the Edge Type (e.g. \"http://purl.uniprot.org/geneid/\");",
+            "\t(6) Object URI that will be connected to the object node in the Edge Type (e.g. \"http://purl.obolibrary.org/obo/\");",
+            "\t(7) Delimiter: A character used to split input text rows into columns (e.g. \"t\" or \",\");",
+            "\t(8) Column Indices: two column indices separated by \";\" (e.g. 0;4 for the first and third columns);",
+            "\t(9) Identifier Maps: A string indicating the column index in the input data source needing identifier mapping and a file pointing to mapping data, for example:",
+                "\t\t\"2:./resources/processed_data/mapping_file_1.txt;4:./resources/processed_data/mapping_file_2.txt\" means:",
+                    "\t\t\t- mapping data from the first node in the edge to the 0th column in \"mapping_file_1.txt\"",
+                    "\t\t\t- mapping data from the second node in the edge to the 4th column in \"mapping_file_2.txt\";",
+            "\t(10) Evidence Criteria: Sets of 3 \"::\"-separated items, where each set is composed of three pieces of \";\"-separated information (e.g. \"4;!=;IEA::8;<;0.0001\" - means:",
+                "\t\t\t- filter the 4th column to keep rows that do not contain \"IEA\"",
+                "\t\t\t- filter the 8th column to keep rows with a value less than \"0.0001\";",
+            "\t(11) Filter Criteria: Sets of 3 \"::\"-separated items, where each set is composed of three pieces of \";\"-separated information (e.g. \"5;==;P::7;==;9606\" - means:",
+                "\t\t- filter the 5th column to only include rows with \"P\"",
+                "\t\t- filter the 7th column to only include rows containing \"99606\"",
+        "",
+            "\tAn example line from the resource_info.txt file is shown below:",
+                "\t\tchemical-gene|;MESH_;|class-class|;MESH_;|class-class|RO_0002434|http://purl.obolibrary.org/obo/|http://purl.uniprot.org/geneid/|#|t|1;4|0:./resources/data_maps/MESH_CHEBI_MAP.txt|None|7;==;9606",
+        "",
+        "(2) ontology_source_info.txt: This document contains a \",\"-delimited line for each ontology source used, for example:",
+            "\t\"chemical,http://purl.obolibrary.org/obo/chebi.owl\"",
+            "\t\"gene,http://purl.obolibrary.org/obo/so.owl\"",
+        "",
+        "(3) edge_source_info.txt: This document contains a \",\"-delimited line for each edge data source, for example:",
+            "\t\"chemical-gene,http://ctdbase.org/reports/CTD_chem_gene_ixns.tsv.gz\"",
+        "",
+        "If you would like more information on the dependency documents need to run PheKnowLator, please visit the following Wiki page: https://github.com/callahantiff/PheKnowLator/wiki/Dependencies."
+    )))
     print('***' * 50 + '\n')
 
     # initialize class
